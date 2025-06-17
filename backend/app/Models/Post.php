@@ -1,8 +1,9 @@
 <?php
-namespace App\Models\Post;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Comment; // 👈 utile si pas encore importé
 
 class Post extends Model
 {

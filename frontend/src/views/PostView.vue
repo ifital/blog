@@ -24,7 +24,7 @@
       </div>
       <h3>Article introuvable</h3>
       <p>{{ postsStore.error }}</p>
-      <router-link to="/" class="btn btn-outline">
+      <router-link to="/home" class="btn btn-outline">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -36,7 +36,7 @@
       <!-- Post Header -->
       <div class="post-header">
         <div class="breadcrumb">
-          <router-link to="/" class="breadcrumb-link">
+          <router-link to="/home" class="breadcrumb-link">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M3 9L12 2L21 9V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -86,7 +86,7 @@
 
         <!-- Post Actions -->
         <div class="post-actions">
-          <router-link to="/" class="btn btn-secondary">
+          <router-link to="/home" class="btn btn-secondary">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>

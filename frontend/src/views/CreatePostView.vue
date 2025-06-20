@@ -12,7 +12,7 @@
           <p>Partagez vos idées avec le monde</p>
         </div>
       </div>
-      <router-link to="/" class="btn btn-secondary">
+      <router-link to="/home" class="btn btn-secondary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -111,7 +111,7 @@
             </svg>
             {{ loading ? 'Publication...' : 'Publier l\'article' }}
           </button>
-          <router-link to="/" class="btn btn-outline">
+          <router-link to="/home" class="btn btn-outline">
             Annuler
           </router-link>
         </div>
@@ -166,7 +166,7 @@ export default {
         }
 
         await this.postsStore.createPost(postData)
-        this.$router.push('/')
+        this.$router.push('/home')
 
       } catch (error) {
         this.error = 'Erreur lors de la création de l\'article. Veuillez réessayer.'

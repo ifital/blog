@@ -12,7 +12,7 @@ export const useCommentsStore = defineStore('comments', {
       this.loading = true
       this.error = null
       try {
-        const response = await api.post('/comments', commentData)
+        const response = await api.post('api/comments', commentData)
         return response.data
       } catch (error) {
         this.error = error.message
@@ -24,7 +24,7 @@ export const useCommentsStore = defineStore('comments', {
 
     async deleteComment(id) {
       try {
-        await api.delete(`/comments/${id}`)
+        await api.delete(`api/comments/${id}`)
       } catch (error) {
         this.error = error.message
         throw error

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import api from '@/services/api'
 
-export const usePostsStore = defineStore('posts', {
+ export const usePostsStore = defineStore('posts', {
   state: () => ({
     posts: [],
     currentPost: null,
@@ -20,7 +20,7 @@ export const usePostsStore = defineStore('posts', {
       this.loading = true
       this.error = null
       try {
-        const response = await api.get('/posts')
+        const response = await api.get('api/posts')
         this.posts = response.data
       } catch (error) {
         this.error = error.message
@@ -30,54 +30,59 @@ export const usePostsStore = defineStore('posts', {
       }
     },
 
-    async fetchPost(id) {
+    async fetchPost(id){
       this.loading = true
       this.error = null
-      try {
-        const response = await api.get(`/posts/${id}`)
+      try{
+        const response = await api.get(`api/posts/${id}`)
         this.currentPost = response.data
         return response.data
-      } catch (error) {
+      }
+      catch(error){
         this.error = error.message
-        console.error('Erreur lors du chargement du post:', error)
-      } finally {
+        console.log('there is a error while loading data', error)
+      }
+      finally{
         this.loading = false
       }
     },
 
     async createPost(postData) {
-      try {
-        const response = await api.post('/posts', postData)
-        this.posts.unshift(response.data)
-        return response.data
-      } catch (error) {
-        this.error = error.message
-        throw error
-      }
+     try{
+      const response = await api.post('api/posts', postData)
+      this.posts.unshift(response.data)
+      return response.data
+     }
+     catch(error){
+      this.error = error.message
+      throw error
+     }
     },
 
     async updatePost(id, postData) {
-      try {
-        const response = await api.put(`/posts/${id}`, postData)
-        const index = this.posts.findIndex(post => post.id === id)
-        if (index !== -1) {
-          this.posts[index] = response.data
+      try{
+        const response = await api.put(`api/posts/${id}`, postData)
+        const index = this.posts.find(post => post.id === id)
+        if(index){
+        this.posts[index] = response.data
         }
         return response.data
-      } catch (error) {
+      }
+      catch(error){
         this.error = error.message
         throw error
       }
     },
 
-    async deletePost(id) {
-      try {
-        await api.delete(`/posts/${id}`)
-        this.posts = this.posts.filter(post => post.id !== id)
-      } catch (error) {
+    async deletePost(id){
+      try{
+         await api.delete(`api/posts/${id}`)
+         this.posts = this.posts.filter(post => post.id !== id)
+      }catch(error){
         this.error = error.message
         throw error
       }
     }
   }
 })
+

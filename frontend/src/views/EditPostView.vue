@@ -209,17 +209,6 @@ export default {
       }
     },
 
-    async deletePost() {
-      if (confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
-        try {
-          await this.postsStore.deletePost(this.$route.params.id)
-          this.$router.push('/')
-          alert('Article supprimé avec succès !')
-        } catch (error) {
-          this.error = 'Erreur lors de la suppression de l\'article'
-        }
-      }
-    }
   }
 }
 </script>

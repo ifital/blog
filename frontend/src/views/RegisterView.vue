@@ -67,6 +67,9 @@
         {{ loading ? 'Inscription...' : 'S’inscrire' }}
       </button>
     </form>
+    <router-link to="/" class="text-blue-600 hover:underline mt-4 inline-block">
+      login
+    </router-link>
   </div>
 </template>
 
@@ -88,9 +91,6 @@ const form = reactive({
 const passwordMismatch = computed(() => form.password !== form.password_confirmation)
 
 const handleRegister = async () => {
-  if (passwordMismatch.value) {
-    return
-  }
   const result = await register(form)
   if (result.success) {
     router.push('/')

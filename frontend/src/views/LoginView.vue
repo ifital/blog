@@ -17,8 +17,10 @@
         {{ loading ? 'Connexion...' : 'Se connecter' }}
       </button>
     </form>
-    <a href="" to="/register">register</a>
-  </div>
+    <router-link to="/register" class="text-blue-600 hover:underline mt-4 inline-block">
+      Pas encore inscrit ? Créez un compte
+    </router-link>
+     </div>
 </template>
 
 <script setup>

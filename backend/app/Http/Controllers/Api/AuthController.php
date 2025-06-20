@@ -48,7 +48,7 @@ class AuthController extends Controller
                 'email' => ['Les identifiants fournis sont incorrects.'],
             ]);
         }
-
+        
         return response()->json([
             'user' => Auth::user(),
             'message' => 'Connexion réussie',

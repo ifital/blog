@@ -9,7 +9,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('comments')->latest()->get();
+        $posts = Post::with('comments')->latest()->paginate(6);
         return response()->json($posts);
     }
 

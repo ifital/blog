@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <!-- HEADER -->
     <div class="header">
       <div class="header-content">
         <div class="header-icon">
@@ -30,7 +31,9 @@
       </button>
     </div>
 
+    <!-- CONTENT -->
     <div class="content-wrapper">
+      <!-- Loading -->
       <div v-if="postsStore.loading" class="loading-card">
         <div class="loading-spinner">
           <svg class="spinner" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,12 +42,11 @@
         </div>
         <p>Chargement des articles...</p>
         <div class="loading-dots">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span></span><span></span><span></span>
         </div>
       </div>
 
+      <!-- Error -->
       <div v-else-if="postsStore.error" class="error-card">
         <div class="error-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,6 +66,7 @@
         </button>
       </div>
 
+      <!-- Empty -->
       <div v-else-if="postsStore.posts.length === 0" class="empty-state">
         <div class="empty-icon">
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -85,11 +88,12 @@
         </router-link>
       </div>
 
+      <!-- Posts List -->
       <div v-else class="posts-container">
         <div class="posts-header">
           <h2>Articles récents</h2>
           <div class="posts-count">
-            {{ postsStore.posts.length }} article{{ postsStore.posts.length > 1 ? 's' : '' }}
+            {{ postsStore.total }} article{{ postsStore.total > 1 ? 's' : '' }}
           </div>
         </div>
         <div class="posts-list">
@@ -99,6 +103,29 @@
             :post="post"
             class="post-card-animated"
           />
+        </div>
+
+        <!-- PAGINATION -->
+        <div class="pagination-controls mt-8 flex justify-center items-center gap-4">
+          <button
+            class="btn btn-outline"
+            :disabled="postsStore.currentPage === 1"
+            @click="changePage(postsStore.currentPage - 1)"
+          >
+            ← Précédent
+          </button>
+
+          <span class="text-gray-700 font-semibold">
+            Page {{ postsStore.currentPage }} sur {{ postsStore.lastPage }}
+          </span>
+
+          <button
+            class="btn btn-outline"
+            :disabled="postsStore.currentPage === postsStore.lastPage"
+            @click="changePage(postsStore.currentPage + 1)"
+          >
+            Suivant →
+          </button>
         </div>
       </div>
     </div>
@@ -127,13 +154,18 @@ export default {
     async retryLoading() {
       await this.postsStore.fetchPosts()
     },
-
-    logout(){
-       this.authStore.logout()
+    logout() {
+      this.authStore.logout()
+    },
+    async changePage(page) {
+      if (page >= 1 && page <= this.postsStore.lastPage) {
+        await this.postsStore.fetchPosts(page)
+      }
     }
   }
 }
 </script>
+
 
 <style scoped>
 .home {

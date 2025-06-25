@@ -11,8 +11,11 @@
         <router-link :to="`/post/${post.id}`" class="btn btn-primary">
           Lire la suite
         </router-link>
-        <span class="comments-count">
+          <span class="comments-count" v-if="Array.isArray(post.comments)">
           {{ post.comments.length }} commentaire(s)
+        </span>
+        <span class="comments-count" v-else>
+          0 commentaire
         </span>
       </div>
       <div class="post-actions mt-2">

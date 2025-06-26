@@ -30,7 +30,7 @@
         Déconnexion
       </button>
     </div>
-
+          <input type="text" class="search-input" v-model='postsStore.searchQuery' placeholder='cherche un post' @input='searchPosts'>
     <!-- CONTENT -->
     <div class="content-wrapper">
       <!-- Loading -->
@@ -161,6 +161,9 @@ export default {
       if (page >= 1 && page <= this.postsStore.lastPage) {
         await this.postsStore.fetchPosts(page)
       }
+    },
+    async searchPosts() {
+      await this.postsStore.fetchPosts(1, this.postsStore.searchQuery);
     }
   }
 }
@@ -299,6 +302,22 @@ export default {
   color: #7f1d1d;
   font-size: 1rem;
 }
+
+.search-input {
+  padding: 0.5rem 1rem;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-left: 1rem;
+  min-width: 250px;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  border-color: #667eea;
+  outline: none;
+}
+
 
 .empty-state {
   background: linear-gradient(135deg, #f3f4f6, #e5e7eb);

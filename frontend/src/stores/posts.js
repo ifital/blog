@@ -7,12 +7,12 @@ export const usePostsStore = defineStore('posts', {
     currentPost: null,
     loading: false,
     error: null,
-
     // pagination
     currentPage: 1,
     lastPage: 1,
     perPage: 10,
     total: 0,
+    searchQuery: '',
   }),
 
   getters: {
@@ -22,11 +22,11 @@ export const usePostsStore = defineStore('posts', {
   },
 
   actions: {
-    async fetchPosts(page = 1) {
+    async fetchPosts(page = 1, search = '') {
       this.loading = true
       this.error = null
       try {
-        const response = await api.get(`api/posts?page=${page}`)
+        const response = await api.get(`api/posts?page=${page}&search=${search}`)
 
         this.posts = response.data.data
         this.currentPage = response.data.current_page

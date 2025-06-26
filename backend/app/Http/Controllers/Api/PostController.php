@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with('comments')->latest()->paginate(6);
+        $query = Post::with('comments')->latest();
+
+        if ($request->has('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        $posts = $query->paginate(6);
         return response()->json($posts);
     }
 

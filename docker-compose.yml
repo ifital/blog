@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+
+  # Laravel backend
+  app:
+    build:
+      context: ./backend
+    container_name: laravel-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+    ports:
+      - "9000:9000"
+    depends_on:
+      - db
+
+  # Vue.js frontend (Vite)
+  frontend:
+    build:
+      context: ./frontend
+    container_name: vue-frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules     # éviter que node_modules du host interfère
+    command: npm run dev -- --host  # ✅ autorise les connexions externes
+    ports:
+      - "5173:5173"
+    restart: unless-stopped
+
+  # PostgreSQL
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postcomment
+      POSTGRES_USER: abdelali
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:latest
+    container_name: nginx-server
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./frontend/dist:/var/www/frontend
+      - ./backend:/var/www/backend
+    depends_on:
+      - app
+      - frontend
+
+volumes:
+  pgdata:
